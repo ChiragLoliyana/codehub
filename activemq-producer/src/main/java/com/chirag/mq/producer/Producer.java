@@ -9,7 +9,6 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 
 public class Producer {
-	@SuppressWarnings("unused")
 	private ConnectionFactory factory;
 	private Connection connection;
 	private Session session;
