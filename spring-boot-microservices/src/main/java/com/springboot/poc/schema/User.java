@@ -1,11 +1,23 @@
 package com.springboot.poc.schema;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class UserDetailsModel {
-	private int id;
+@Entity
+public class User {
+	
+	@Id
+	@GeneratedValue
+	private Long id;
 	
 	@NotNull(message = "Name can not be NULL")
 	@Size(max = 20, message = "Name must be less than 20 char")
@@ -15,6 +27,10 @@ public class UserDetailsModel {
 	@Email
 	private String email;
 
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="usetId")
+	private Set<Contact> contacts;
+	
 	public String getName() {
 		return name;
 	}
@@ -31,11 +47,19 @@ public class UserDetailsModel {
 		this.email = email;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Set<Contact> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(Set<Contact> contacts) {
+		this.contacts = contacts;
 	}
 }

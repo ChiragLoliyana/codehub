@@ -2,6 +2,7 @@ package com.springboot.poc.controller;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springboot.poc.schema.UserDetailsModel;
+import com.springboot.poc.dao.UserDAO;
+import com.springboot.poc.schema.User;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
+	
+	@Autowired
+	private UserDAO userDAO;
 
 	@GetMapping()
 	public String getUsers(@RequestParam(value = "page", defaultValue = "1") int page,
@@ -29,17 +34,15 @@ public class UserController {
 	}
 
 	@GetMapping(path = "/{userId}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<UserDetailsModel> getUser(@PathVariable String userId) {
-		UserDetailsModel userDetails = new UserDetailsModel();
-		userDetails.setId(Integer.parseInt(userId));
-		userDetails.setName("Chirag");
-		userDetails.setEmail("chirag.loliyana@gmail.com");
-		return new ResponseEntity<UserDetailsModel>(userDetails, HttpStatus.FOUND);
+	public ResponseEntity<User> getUser(@PathVariable Long userId) {
+		User userDetails = userDAO.findById(userId).get();
+		return new ResponseEntity<User>(userDetails, HttpStatus.FOUND);
 	}
 
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public UserDetailsModel createUser(@Valid @RequestBody UserDetailsModel userDetailsModel) {
+	public User createUser(@Valid @RequestBody User userDetailsModel) {
+		userDAO.save(userDetailsModel);
 		return userDetailsModel;
 	}
 
