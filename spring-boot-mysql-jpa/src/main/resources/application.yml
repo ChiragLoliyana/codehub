@@ -8,7 +8,7 @@ spring:
         format_sql: true
       
   datasource: 
-    url: jdbc:mysql://localhost:3306/poc
+    url: jdbc:mysql://localhost:3306/poc?useSSL=false
     username: root
     password: root
   
