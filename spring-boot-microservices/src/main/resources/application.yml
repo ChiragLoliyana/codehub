@@ -4,10 +4,10 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/kennyk65/Microservices-With-Spring-Student-Files
+          uri: https://github.com/ChiragLoliyana/codehub #https://github.com/ChiragLoliyana/codehub/tree/chiragl/ConfigData
           searchPaths: ConfigData
         # "native" is used when the native profile is active, for local tests with a classpath repo:
-        native:
-          searchLocations: classpath:offline-repository/
+#        native:
+#          searchLocations: classpath:offline-repository/
 server:
-  port: 8080
+  port: 8001
